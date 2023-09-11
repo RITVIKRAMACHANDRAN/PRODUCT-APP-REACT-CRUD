@@ -1,19 +1,33 @@
-import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+// App.js
+import React, { useState } from 'react';
+import productsData from './data';
 import ProductList from './components/ProductList';
-import AddProduct from './components/AddProduct';
-import EditProduct from './components/EditProduct';
+import ProductForm from './components/ProductForm';
 
 function App() {
+  const [products, setProducts] = useState(productsData);
+
+
+  const handleDelete = (productId) => {
+    const updatedProducts = products.filter((product) => product.id !== productId);
+    setProducts(updatedProducts);
+  };
+
+  const handleAddProduct = (newProduct) => {
+    const newProductId = products.length + 1;
+    newProduct.id = newProductId;
+    setProducts([...products, newProduct]);
+  };
+
   return (
-    <Router>
-      <div className="App">
-        <h1>Product Listing App</h1>
-        <Route path="/" exact component={ProductList} />
-        <Route path="/add" component={AddProduct} />
-        <Route path="/edit/:id" component={EditProduct} />
+    <div>
+      <h1>Product Listing App</h1>
+      <div className="container">
+        <ProductList products={products} onDelete={handleDelete} />
+       
+        <ProductForm onSubmit={handleAddProduct} />
       </div>
-    </Router>
+    </div>
   );
 }
 
