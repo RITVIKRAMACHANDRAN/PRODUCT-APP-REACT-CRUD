@@ -1,13 +1,19 @@
 import React from 'react';
-import './App.css'; // You can import your CSS or styling here
-import ProductList from './components/ProductList'; // Import the ProductList component
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import ProductList from './components/ProductList';
+import AddProduct from './components/AddProduct';
+import EditProduct from './components/EditProduct';
 
 function App() {
   return (
-    <div className="App">
-      {/* Render the ProductList component */}
-      <ProductList />
-    </div>
+    <Router>
+      <div className="App">
+        <h1>Product Listing App</h1>
+        <Route path="/" exact component={ProductList} />
+        <Route path="/add" component={AddProduct} />
+        <Route path="/edit/:id" component={EditProduct} />
+      </div>
+    </Router>
   );
 }
 
